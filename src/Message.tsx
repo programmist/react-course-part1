@@ -1,8 +1,9 @@
-
-function Message() {
-  return (
-    <div>Message</div>
-  )
+interface Props {
+  message: string;
 }
 
-export default Message
+function Message({ message }: Props) {
+  return <div>{message}</div>;
+}
+
+export default Message;
