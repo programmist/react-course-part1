@@ -1,8 +1,8 @@
 import "./App.css";
-import Message from "./Message";
+import Greeting from "./Greeting";
 
 function App() {
-  return <Message message="Hello" />;
+  return <Greeting />;
 }
 
 export default App;
