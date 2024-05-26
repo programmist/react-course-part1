@@ -1,8 +1,7 @@
-import "./App.css";
-import Greeting from "./Greeting";
+import ListGroup from "./components/ListGroup";
 
 function App() {
-  return <Greeting />;
+  return <ListGroup />;
 }
 
 export default App;
