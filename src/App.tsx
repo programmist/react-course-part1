@@ -1,4 +1,4 @@
-import ListGroup from "@components/ListGroup";
+import ListGroup, { ListItem } from "@components/ListGroup";
 
 const cities = [
   { id: 1, name: "New York" },
@@ -9,7 +9,10 @@ const cities = [
 ];
 
 function App() {
-  return <ListGroup title="Cities" items={cities} />;
+  const handleSelect = (item: ListItem) => console.log(item);
+  return (
+    <ListGroup title="Cities" items={cities} onSelectItem={handleSelect} />
+  );
 }
 
 export default App;

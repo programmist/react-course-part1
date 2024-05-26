@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface ListItem {
+export interface ListItem {
   id: number;
   name: string;
 }
@@ -8,9 +8,10 @@ interface ListItem {
 interface Props {
   title?: string;
   items: ListItem[];
+  onSelectItem: (item: ListItem) => void;
 }
 
-function ListGroup({ title, items = [] }: Props) {
+function ListGroup({ title, items = [], onSelectItem }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
   return (
@@ -18,17 +19,20 @@ function ListGroup({ title, items = [] }: Props) {
       <h1>{title}</h1>
       {items.length === 0 && <p>No Items Found</p>}
       <ul className="list-group">
-        {items.map(({ id, name }, index) => (
+        {items.map((item, index) => (
           <li
-            key={id}
+            key={item.id}
             className={
               selectedIndex === index
                 ? "list-group-item active"
                 : "list-group-item"
             }
-            onClick={() => setSelectedIndex(index)}
+            onClick={() => {
+              setSelectedIndex(index);
+              onSelectItem(item);
+            }}
           >
-            {name}
+            {item.name}
           </li>
         ))}
       </ul>
