@@ -1,4 +1,4 @@
-import ListGroup from "./components/ListGroup";
+import ListGroup from "@components/ListGroup";
 
 const cities = [
   { id: 1, name: "New York" },
