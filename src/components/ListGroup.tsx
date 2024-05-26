@@ -1,5 +1,5 @@
 function ListGroup() {
-  let items = [
+  const items = [
     { id: 1, city: "New York" },
     { id: 2, city: "London" },
     { id: 3, city: "Tokyo" },
@@ -7,7 +7,9 @@ function ListGroup() {
     { id: 5, city: "Geneva" },
   ];
 
-  items = [];
+  // items = [];
+
+  const handleClick = (city: string) => console.log(city);
 
   return (
     <>
@@ -15,7 +17,11 @@ function ListGroup() {
       {items.length === 0 && <p>No Items Found</p>}
       <ul className="list-group">
         {items.map(({ id, city }) => (
-          <li key={id} className="list-group-item">
+          <li
+            key={id}
+            onClick={() => handleClick(city)}
+            className="list-group-item"
+          >
             {city}
           </li>
         ))}
