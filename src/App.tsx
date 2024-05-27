@@ -1,5 +1,6 @@
 import ListGroup, { ListItem } from "@components/ListGroup";
 import Alert from "@components/Alert";
+import Button from "@components/Button";
 
 const cities = [
   { id: 1, name: "New York" },
@@ -21,7 +22,11 @@ function App() {
         >
           Alert
         </a>{" "}
-        — check it out!
+        <div>
+          <Button variant="info" onClick={() => console.log("button clicked")}>
+            check it out!
+          </Button>
+        </div>
       </Alert>
       <ListGroup title="Cities" items={cities} onSelectItem={handleSelect} />
     </>
