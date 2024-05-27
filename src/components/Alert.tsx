@@ -1,15 +1,8 @@
+import BootstrapVariant from "@/types/BootstrapVariant";
 import { ReactNode } from "react";
 
-type AlertType =
-  | "primary"
-  | "secondary"
-  | "success"
-  | "danger"
-  | "warning"
-  | "info";
-
 interface Props {
-  type: AlertType;
+  type: BootstrapVariant;
   children: ReactNode;
 }
 

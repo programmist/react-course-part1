@@ -1,15 +1,8 @@
+import BootstrapVariant from "@/types/BootstrapVariant";
 import { ReactNode } from "react";
 
-type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "success"
-  | "danger"
-  | "warning"
-  | "info";
-
 interface Props {
-  variant?: ButtonVariant;
+  variant?: BootstrapVariant;
   children: ReactNode;
   onClick: () => void;
 }
