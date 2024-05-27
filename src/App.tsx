@@ -1,6 +1,7 @@
 import ListGroup, { ListItem } from "@components/ListGroup";
 import Alert from "@components/Alert";
 import Button from "@components/Button";
+import { useState } from "react";
 
 const cities = [
   { id: 1, name: "New York" },
@@ -12,22 +13,29 @@ const cities = [
 
 function App() {
   const handleSelect = (item: ListItem) => console.log(item);
+  const [alertVisible, setAlertVisible] = useState(false);
   return (
     <>
-      <Alert type="success">
-        A simple primary{" "}
-        <a
-          href="https://getbootstrap.com/docs/5.3/components/alerts/"
-          target="_blank"
+      {alertVisible && (
+        <Alert type="success" onClose={() => setAlertVisible(false)}>
+          A simple primary{" "}
+          <a
+            href="https://getbootstrap.com/docs/5.3/components/alerts/"
+            target="_blank"
+          >
+            Alert
+          </a>{" "}
+        </Alert>
+      )}
+
+      <div>
+        <Button
+          variant="info"
+          onClick={() => setAlertVisible(alertVisible ? false : true)}
         >
-          Alert
-        </a>{" "}
-        <div>
-          <Button variant="info" onClick={() => console.log("button clicked")}>
-            check it out!
-          </Button>
-        </div>
-      </Alert>
+          {alertVisible ? "Hide" : "Reveal"} Alert
+        </Button>
+      </div>
       <ListGroup title="Cities" items={cities} onSelectItem={handleSelect} />
     </>
   );
