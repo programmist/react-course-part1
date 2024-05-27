@@ -1,4 +1,5 @@
 import ListGroup, { ListItem } from "@components/ListGroup";
+import Alert from "@components/Alert";
 
 const cities = [
   { id: 1, name: "New York" },
@@ -11,7 +12,19 @@ const cities = [
 function App() {
   const handleSelect = (item: ListItem) => console.log(item);
   return (
-    <ListGroup title="Cities" items={cities} onSelectItem={handleSelect} />
+    <>
+      <Alert type="success">
+        A simple primary{" "}
+        <a
+          href="https://getbootstrap.com/docs/5.3/components/alerts/"
+          target="_blank"
+        >
+          Alert
+        </a>{" "}
+        — check it out!
+      </Alert>
+      <ListGroup title="Cities" items={cities} onSelectItem={handleSelect} />
+    </>
   );
 }
 
