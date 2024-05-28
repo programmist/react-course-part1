@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./ListGroup.module.css";
 
 export interface ListItem {
   id: number;
@@ -18,7 +19,7 @@ function ListGroup({ title, items = [], onSelectItem }: Props) {
     <>
       <h1>{title}</h1>
       {items.length === 0 && <p>No Items Found</p>}
-      <ul className="list-group">
+      <ul className={[styles.listGroup, styles.container].join(" ")}>
         {items.map((item, index) => (
           <li
             key={item.id}
