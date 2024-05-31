@@ -1,9 +1,10 @@
 import { ReactNode, useState } from "react";
 import styled from "styled-components";
 import { FcOk } from "react-icons/fc";
+import Like from "@components/Like";
 
 const Title = styled.h1`
-  font-family: ystem-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
     "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 `;
@@ -13,11 +14,11 @@ const List = styled.ul`
 `;
 
 interface ListItemProps {
-  active: boolean;
+  $active: boolean;
 }
 
 const ListItem = styled.li<ListItemProps>`
-  background: ${(props) => (props.active ? "dodgerblue" : "none")};
+  background: ${(props) => (props.$active ? "dodgerblue" : "none")};
   padding: 5px 0;
   cursor: pointer;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
@@ -27,6 +28,7 @@ const ListItem = styled.li<ListItemProps>`
 export interface ListItem {
   id: number;
   name: string;
+  likeState: boolean;
 }
 
 interface Props {
@@ -45,7 +47,7 @@ function ListGroup({ title, items = [], onSelectItem }: Props) {
       <List>
         {items.map((item, index) => (
           <ListItem
-            active={index === selectedIndex}
+            $active={index === selectedIndex}
             key={item.id}
             className={
               selectedIndex === index
@@ -57,6 +59,12 @@ function ListGroup({ title, items = [], onSelectItem }: Props) {
               onSelectItem(item);
             }}
           >
+            <Like
+              initialState={item.likeState}
+              onChange={(isLiked) =>
+                console.log(`${item.name} ${isLiked ? "liked" : "unliked"}`)
+              }
+            />{" "}
             {item.name} {selectedIndex === index && <FcOk />}
           </ListItem>
         ))}

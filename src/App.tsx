@@ -5,11 +5,11 @@ import { useState } from "react";
 import { FaCity } from "react-icons/fa6";
 
 const cities = [
-  { id: 1, name: "New York" },
-  { id: 2, name: "London" },
-  { id: 3, name: "Tokyo" },
-  { id: 4, name: "Paris" },
-  { id: 5, name: "Geneva" },
+  { id: 1, name: "New York", likeState: false },
+  { id: 2, name: "London", likeState: false },
+  { id: 3, name: "Tokyo", likeState: true },
+  { id: 4, name: "Paris", likeState: false },
+  { id: 5, name: "Geneva", likeState: true },
 ];
 
 function App() {
