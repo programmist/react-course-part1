@@ -1,5 +1,27 @@
 import { useState } from "react";
-import styles from "./ListGroup.module.css";
+import styled from "styled-components";
+
+const Title = styled.h1`
+  font-family: ystem-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+`;
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+interface ListItemProps {
+  active: boolean;
+}
+
+const ListItem = styled.li<ListItemProps>`
+  background: ${(props) => (props.active ? "dodgerblue" : "none")};
+  padding: 5px 0;
+  cursor: pointer;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+`;
 
 export interface ListItem {
   id: number;
@@ -13,15 +35,16 @@ interface Props {
 }
 
 function ListGroup({ title, items = [], onSelectItem }: Props) {
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   return (
     <>
-      <h1>{title}</h1>
+      <Title>{title}</Title>
       {items.length === 0 && <p>No Items Found</p>}
-      <ul className={[styles.listGroup, styles.container].join(" ")}>
+      <List>
         {items.map((item, index) => (
-          <li
+          <ListItem
+            active={index === selectedIndex}
             key={item.id}
             className={
               selectedIndex === index
@@ -34,9 +57,9 @@ function ListGroup({ title, items = [], onSelectItem }: Props) {
             }}
           >
             {item.name}
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </>
   );
 }
