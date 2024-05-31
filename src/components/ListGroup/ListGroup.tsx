@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import styled from "styled-components";
+import { FcOk } from "react-icons/fc";
 
 const Title = styled.h1`
   font-family: ystem-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
@@ -29,7 +30,7 @@ export interface ListItem {
 }
 
 interface Props {
-  title?: string;
+  title?: ReactNode;
   items: ListItem[];
   onSelectItem: (item: ListItem) => void;
 }
@@ -56,7 +57,7 @@ function ListGroup({ title, items = [], onSelectItem }: Props) {
               onSelectItem(item);
             }}
           >
-            {item.name}
+            {item.name} {selectedIndex === index && <FcOk />}
           </ListItem>
         ))}
       </List>

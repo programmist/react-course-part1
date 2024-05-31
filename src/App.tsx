@@ -2,6 +2,7 @@ import ListGroup, { ListItem } from "@components/ListGroup";
 import Alert from "@components/Alert";
 import Button from "@components/Button";
 import { useState } from "react";
+import { FaCity } from "react-icons/fa6";
 
 const cities = [
   { id: 1, name: "New York" },
@@ -36,7 +37,15 @@ function App() {
           {alertVisible ? "Hide" : "Reveal"} Alert
         </Button>
       </div>
-      <ListGroup title="Cities" items={cities} onSelectItem={handleSelect} />
+      <ListGroup
+        title={
+          <>
+            <FaCity /> Cities
+          </>
+        }
+        items={cities}
+        onSelectItem={handleSelect}
+      />
     </>
   );
 }
