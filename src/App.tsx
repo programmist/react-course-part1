@@ -3,6 +3,7 @@ import Alert from "@components/Alert";
 import Button from "@components/Button";
 import { useState } from "react";
 import { FaCity } from "react-icons/fa6";
+import BugList from "@components/BugList";
 
 const cities = [
   { id: 1, name: "New York", likeState: false },
@@ -46,6 +47,8 @@ function App() {
         items={cities}
         onSelectItem={handleSelect}
       />
+      <hr />
+      <BugList />
     </>
   );
 }
