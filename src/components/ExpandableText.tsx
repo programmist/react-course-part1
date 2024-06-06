@@ -35,13 +35,15 @@ function ExpandableText({ maxChars = 25, breakWords = true, children }: Props) {
 
   return (
     <>
-      <span>
-        {text}
-        {expanded ? " " : " ... "}
-      </span>
-      <LinkButton onClick={() => toggleExpanded((expanded) => !expanded)}>
-        {expanded ? "<<" : ">>"}
-      </LinkButton>
+      {text}
+      {children.length > maxChars && (
+        <>
+          {expanded ? " " : " ... "}
+          <LinkButton onClick={() => toggleExpanded((expanded) => !expanded)}>
+            {expanded ? "<<" : ">>"}
+          </LinkButton>
+        </>
+      )}
     </>
   );
 }

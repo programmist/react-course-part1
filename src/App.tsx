@@ -52,7 +52,7 @@ function App() {
       <BugList />
       <hr />
       <h1>Expandable Text Component:</h1>
-      <ExpandableText maxChars={90} breakWords={false}>
+      <ExpandableText maxChars={89} breakWords={true}>
         Bacon ipsum dolor amet t-bone shank venison rump picanha porchetta
         capicola. Swine hamburger tri-tip, drumstick kevin corned beef salami
         picanha shank t-bone beef ribs ham chicken jerky meatball. Pork belly
