@@ -33,7 +33,7 @@ function Form() {
         </label>
         <input
           onChange={(event) =>
-            setPerson({ ...person, age: parseInt(event.target.value) })
+            setPerson({ ...person, age: event.target.value })
           }
           value={person.age}
           id="age"
