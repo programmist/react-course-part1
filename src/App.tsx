@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FaCity } from "react-icons/fa6";
 import BugList from "@components/BugList";
 import ExpandableText from "@components/ExpandableText";
+import Form from "./components/Form";
 
 const cities = [
   { id: 1, name: "New York", likeState: false },
@@ -63,6 +64,9 @@ function App() {
         tri-tip frankfurter, kevin jerky doner beef beef ribs pancetta
         tenderloin short loin.
       </ExpandableText>
+      <hr />
+      <h1>Forms:</h1>
+      <Form />
     </>
   );
 }
