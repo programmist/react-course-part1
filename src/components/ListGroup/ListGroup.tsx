@@ -1,29 +1,30 @@
 import { ReactNode, useState } from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { FcOk } from "react-icons/fc";
-import Like from "@components/Like";
+import Like from "@components/Like/Like";
 
-const Title = styled.h1`
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
-    "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-`;
-const List = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
+// Remove style-components while using Bootstrap
+// const Title = styled.h1`
+//   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+//     "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji",
+//     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+// `;
+// const List = styled.ul`
+//   list-style: none;
+//   padding: 0;
+// `;
 
-interface ListItemProps {
-  $active: boolean;
-}
+// interface ListItemProps {
+//   $active: boolean;
+// }
 
-const ListItem = styled.li<ListItemProps>`
-  background: ${(props) => (props.$active ? "dodgerblue" : "none")};
-  padding: 5px 0;
-  cursor: pointer;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-`;
+// const ListItem = styled.li<ListItemProps>`
+//   background: ${(props) => (props.$active ? "dodgerblue" : "none")};
+//   padding: 5px 0;
+//   cursor: pointer;
+//   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+//     "Lucida Sans", Arial, sans-serif;
+// `;
 
 export interface ListItem {
   id: number;
@@ -42,12 +43,11 @@ function ListGroup({ title, items = [], onSelectItem }: Props) {
 
   return (
     <>
-      <Title>{title}</Title>
+      <h1>{title}</h1>
       {items.length === 0 && <p>No Items Found</p>}
-      <List>
+      <ul className="list-group">
         {items.map((item, index) => (
-          <ListItem
-            $active={index === selectedIndex}
+          <li
             key={item.id}
             className={
               selectedIndex === index
@@ -66,9 +66,9 @@ function ListGroup({ title, items = [], onSelectItem }: Props) {
               }
             />{" "}
             {item.name} {selectedIndex === index && <FcOk />}
-          </ListItem>
+          </li>
         ))}
-      </List>
+      </ul>
     </>
   );
 }

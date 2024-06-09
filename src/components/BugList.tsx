@@ -26,12 +26,12 @@ function BugList() {
   return (
     <>
       <h1>Bug List</h1>
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <td>ID</td>
-            <td>Title</td>
-            <td>Fixed</td>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Fixed</th>
           </tr>
         </thead>
         <tbody>

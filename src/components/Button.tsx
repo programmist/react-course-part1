@@ -3,7 +3,10 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 
 const Btn = styled.button`
-  display: inline-block;
+  margin: 5px;
+
+  // Not needed when using Bootstrap
+  /* display: inline-block;
   text-align: center;
   border-radius: 0.375rem;
   padding: 0.375rem 0.75rem;
@@ -13,7 +16,7 @@ const Btn = styled.button`
   color: #fff;
   background-color: #0d6efd;
   border: 1px solid #0d6efd;
-  cursor: pointer;
+  cursor: pointer; */
 `;
 
 interface Props {

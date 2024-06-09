@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaRegHeart } from "react-icons/fa6";
 import { FaHeart } from "react-icons/fa6";
+import "./Like.css";
 
 interface Props {
   initialState?: boolean;
@@ -13,13 +14,13 @@ function Like({ initialState = false, onChange }: Props) {
     onChange(!likeState);
   };
   return (
-    <>
+    <span className="like">
       {likeState ? (
         <FaHeart color="red" onClick={toggleLikeState} />
       ) : (
         <FaRegHeart onClick={toggleLikeState} />
       )}
-    </>
+    </span>
   );
 }
 

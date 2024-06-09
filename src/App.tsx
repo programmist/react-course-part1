@@ -33,7 +33,7 @@ function App() {
 
       <div>
         <Button
-          variant="info"
+          variant="success"
           onClick={() => setAlertVisible(alertVisible ? false : true)}
         >
           {alertVisible ? "Hide" : "Reveal"} Alert
