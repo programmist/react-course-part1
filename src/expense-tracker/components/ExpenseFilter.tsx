@@ -1,17 +1,21 @@
+import {
+  expenseCategories,
+  ExpenseCategory,
+} from "@/expense-tracker/categories";
+
 interface Props {
-  categories: Array<string>;
-  onSelectCategory: (category: string) => void;
+  onSelectCategory: (category: ExpenseCategory) => void;
 }
 
-function ExpenseFilter({ categories, onSelectCategory }: Props) {
+function ExpenseFilter({ onSelectCategory }: Props) {
   return (
     <select
       className="form-select"
-      onChange={(e) => onSelectCategory(e.target.value)}
+      onChange={(e) => onSelectCategory(e.target.value as ExpenseCategory)}
       defaultValue=""
     >
       <option value="">All Categories</option>
-      {categories.map((cat) => (
+      {expenseCategories.map((cat) => (
         <option key={cat} value={cat}>
           {cat}
         </option>

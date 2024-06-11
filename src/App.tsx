@@ -17,14 +17,6 @@ const cities = [
   { id: 5, name: "Geneva", likeState: true },
 ];
 
-type ExpenseCategory = "Groceries" | "Utilities" | "Entertainment";
-
-const expenseCategories: Array<ExpenseCategory> = [
-  "Groceries",
-  "Utilities",
-  "Entertainment",
-];
-
 function App() {
   const handleSelect = (item: ListItem) => console.log(item);
   const [alertVisible, setAlertVisible] = useState(false);
@@ -93,12 +85,7 @@ function App() {
       <hr />
       <h1>Expenses:</h1>
       <div className="mb-3">
-        <ExpenseFilter
-          categories={expenseCategories}
-          onSelectCategory={(cat) =>
-            setSelectedCategory(cat as ExpenseCategory)
-          }
-        />
+        <ExpenseFilter onSelectCategory={(cat) => setSelectedCategory(cat)} />
       </div>
       <ExpenseList
         expenses={filteredExpenses}
