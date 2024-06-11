@@ -15,7 +15,6 @@ function ExpenseList({ expenses, onDelete }: Props) {
 
   return (
     <>
-      <h1>Expenses</h1>
       <table className="table table-bordered">
         <thead>
           <tr>
@@ -44,13 +43,13 @@ function ExpenseList({ expenses, onDelete }: Props) {
         </tbody>
         <tfoot>
           <tr>
-            <td>Total</td>
-            <td>
+            <th scope="row">Total</th>
+            <th scope="row">
               $
               {expenses
                 .reduce((total, { amount }) => total + amount, 0)
                 .toFixed(2)}
-            </td>
+            </th>
             <td></td>
             <td></td>
           </tr>

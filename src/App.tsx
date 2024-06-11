@@ -5,8 +5,9 @@ import { useState } from "react";
 import { FaCity } from "react-icons/fa6";
 import BugList from "@components/BugList";
 import ExpandableText from "@components/ExpandableText";
-import Form from "./components/Form";
-import ExpenseList from "./expense-tracker/components/ExpenseList";
+import Form from "@components/Form";
+import ExpenseList from "@/expense-tracker/components/ExpenseList";
+import ExpenseFilter from "@/expense-tracker/components/ExpenseFilter";
 
 const cities = [
   { id: 1, name: "New York", likeState: false },
@@ -16,15 +17,30 @@ const cities = [
   { id: 5, name: "Geneva", likeState: true },
 ];
 
+type ExpenseCategory = "Groceries" | "Utilities" | "Entertainment";
+
+const expenseCategories: Array<ExpenseCategory> = [
+  "Groceries",
+  "Utilities",
+  "Entertainment",
+];
+
 function App() {
   const handleSelect = (item: ListItem) => console.log(item);
   const [alertVisible, setAlertVisible] = useState(false);
+
   const [expenses, setExpenses] = useState([
-    { id: 1, description: "Electricity", amount: 15, category: "Utility" },
-    { id: 2, description: "Internet", amount: 5, category: "Utility" },
-    { id: 3, description: "Flour", amount: 5, category: "Grocery" },
-    { id: 4, description: "Salt", amount: 2, category: "Grocery" },
+    { id: 1, description: "Electricity", amount: 15, category: "Utilities" },
+    { id: 2, description: "Internet", amount: 5, category: "Utilities" },
+    { id: 3, description: "Flour", amount: 5, category: "Groceries" },
+    { id: 4, description: "Salt", amount: 2, category: "Groceries" },
+    { id: 5, description: "Tivo", amount: 2, category: "Entertainment" },
   ]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const filteredExpenses = selectedCategory
+    ? expenses.filter((ex) => selectedCategory === ex.category)
+    : expenses;
+
   return (
     <>
       {alertVisible && (
@@ -75,8 +91,17 @@ function App() {
       <h1>Forms:</h1>
       <Form />
       <hr />
+      <h1>Expenses:</h1>
+      <div className="mb-3">
+        <ExpenseFilter
+          categories={expenseCategories}
+          onSelectCategory={(cat) =>
+            setSelectedCategory(cat as ExpenseCategory)
+          }
+        />
+      </div>
       <ExpenseList
-        expenses={expenses}
+        expenses={filteredExpenses}
         onDelete={(id) => setExpenses(expenses.filter((e) => e.id !== id))}
       />
     </>
