@@ -12,8 +12,8 @@ interface UserAddress {
 interface User {
   id: number;
   username: string;
-  email: string;
-  address: UserAddress;
+  email?: string;
+  address?: UserAddress;
 }
 
 function GetUsersApp() {
@@ -56,10 +56,36 @@ function GetUsersApp() {
       });
   };
 
+  /*
+   * Note: Seems confusing that we're adding the same user twice: Once
+   * optimistically and again after POST success. The reason this works
+   * is because the `users` object that we're passing to `setUsers` never
+   * changes due to closure state. If we used setUsers((users) => ...) then
+   * we'd have duplicate users since the `user` object passed to the callback
+   * of that version has been updated with the original addition.
+   */
+  const addUser = () => {
+    const originalUsers = [...users];
+    const newUser = { id: 0, username: "Tony" };
+    setUsers([newUser, ...users]);
+    axios
+      .post("https://jsonplaceholder.typicode.com/users/", newUser)
+      .then(({ data: savedUser }) => {
+        setUsers([savedUser, ...users]);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
+  };
+
   return (
     <>
       {isLoading && <div className="spinner-border"></div>}
       {error && <p className="text-danger">{error}</p>}
+      <button className="btn btn-primary mb-3" onClick={addUser}>
+        Add
+      </button>
       <ul className="list-group">
         {users.map((user) => (
           <li
