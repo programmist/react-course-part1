@@ -86,7 +86,14 @@ function App() {
       <hr />
       <h1>Expenses:</h1>
       <div className="mb-5">
-        <ExpenseForm />
+        <ExpenseForm
+          onSubmit={(expense) =>
+            setExpenses((expenses) => [
+              ...expenses,
+              { ...expense, id: expenses.length + 1 },
+            ])
+          }
+        />
       </div>
       <div className="mb-3">
         <ExpenseFilter onSelectCategory={(cat) => setSelectedCategory(cat)} />
