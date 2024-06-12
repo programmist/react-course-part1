@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProductListApp from "./apps/ProductListApp";
 import StateAndFormsApps from "./apps/StateAndFormsApps";
-import FetchDataApp from "./apps/FetchDataApp";
+import FetchDataApp from "./apps/FetchUsersApp";
 
 const applications = [
   {
