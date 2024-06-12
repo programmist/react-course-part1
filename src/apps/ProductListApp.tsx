@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import ProductList from "./components/ProductList";
+import ProductList from "@components/ProductList";
 
 const connect = () => console.log("connecting...");
 const disconnect = () => console.log("disconnecting...");
 
-function BackendApps() {
+function ProductListApp() {
   useEffect(() => {
     connect();
     return () => disconnect();
@@ -27,4 +27,4 @@ function BackendApps() {
   );
 }
 
-export default BackendApps;
+export default ProductListApp;

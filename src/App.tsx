@@ -1,6 +1,7 @@
 import { useState } from "react";
-import BackendApps from "./BackendApps";
-import StateAndFormsApps from "./StateAndFormsApps";
+import ProductListApp from "./apps/ProductListApp";
+import StateAndFormsApps from "./apps/StateAndFormsApps";
+import FetchDataApp from "./apps/FetchDataApp";
 
 const applications = [
   {
@@ -8,11 +9,20 @@ const applications = [
     description: "Form and State Apps",
     app: <StateAndFormsApps />,
   },
-  { value: "backend", description: "Backend Apps", app: <BackendApps /> },
+  {
+    value: "productList",
+    description: "Product List",
+    app: <ProductListApp />,
+  },
+  {
+    value: "fetchData",
+    description: "Fetch Data",
+    app: <FetchDataApp />,
+  },
 ];
 
 function App() {
-  const [selectedApp, setSelectedApp] = useState(applications[1].value);
+  const [selectedApp, setSelectedApp] = useState(applications[2].value);
 
   return (
     <>
