@@ -1,4 +1,4 @@
-import axios, { CanceledError } from "axios";
+import apiClient, { CanceledError } from "@/services/api-client";
 import { useEffect, useState } from "react";
 
 interface UserAddress {
@@ -31,8 +31,8 @@ function GetUsersApp() {
 
     // simulate a delay
     setTimeout(() => {
-      axios
-        .get<User[]>("https://jsonplaceholder.typicode.com/users", {
+      apiClient
+        .get<User[]>("users", {
           signal: controller.signal,
         })
         .then((res) => setUsers(res.data))
@@ -48,12 +48,10 @@ function GetUsersApp() {
   const deleteUser = ({ id }: User) => {
     const originalUsers = [...users];
     setUsers(users.filter((user) => user.id !== id));
-    axios
-      .delete(`https://jsonplaceholder.typicode.com/users/${id}`)
-      .catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
-      });
+    apiClient.delete(`users/${id}`).catch((err) => {
+      setError(err.message);
+      setUsers(originalUsers);
+    });
   };
 
   /*
@@ -70,8 +68,8 @@ function GetUsersApp() {
     if (username) {
       const newUser = { id: 0, username };
       setUsers([newUser, ...users]);
-      axios
-        .post("https://jsonplaceholder.typicode.com/users/", newUser)
+      apiClient
+        .post("users/", newUser)
         .then(({ data: savedUser }) => {
           setUsers([savedUser, ...users]);
         })
@@ -89,15 +87,10 @@ function GetUsersApp() {
     if (username) {
       const patchedUser = { ...user, username };
       setUsers(users.map((u) => (u.id === user.id ? patchedUser : u)));
-      axios
-        .patch(
-          `https://jsonplaceholder.typicode.com/users/${user.id}`,
-          patchedUser
-        )
-        .catch((err) => {
-          setError(err.message);
-          setUsers(originalUsers);
-        });
+      apiClient.patch(`users/${user.id}`, patchedUser).catch((err) => {
+        setError(err.message);
+        setUsers(originalUsers);
+      });
     }
   };
 
