@@ -66,29 +66,32 @@ function GetUsersApp() {
    */
   const addUser = () => {
     const originalUsers = [...users];
-    const newUser = { id: 0, username: "Tony" };
-    setUsers([newUser, ...users]);
-    axios
-      .post("https://jsonplaceholder.typicode.com/users/", newUser)
-      .then(({ data: savedUser }) => {
-        setUsers([savedUser, ...users]);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
-      });
+    const username = prompt(`New username:`)?.trim();
+    if (username) {
+      const newUser = { id: 0, username };
+      setUsers([newUser, ...users]);
+      axios
+        .post("https://jsonplaceholder.typicode.com/users/", newUser)
+        .then(({ data: savedUser }) => {
+          setUsers([savedUser, ...users]);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setUsers(originalUsers);
+        });
+    }
   };
 
   const updateUser = (user: User) => {
     const originalUsers = [...users];
     const username = prompt(`Change username ${user.username} to:`)?.trim();
 
-    if (username && username.trim()) {
+    if (username) {
       const patchedUser = { ...user, username };
       setUsers(users.map((u) => (u.id === user.id ? patchedUser : u)));
       axios
         .patch(
-          `https://jsonplaceholder.typicode.com/userds/${user.id}`,
+          `https://jsonplaceholder.typicode.com/users/${user.id}`,
           patchedUser
         )
         .catch((err) => {
