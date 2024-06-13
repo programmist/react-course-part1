@@ -79,6 +79,25 @@ function GetUsersApp() {
       });
   };
 
+  const updateUser = (user: User) => {
+    const originalUsers = [...users];
+    const username = prompt(`Change username ${user.username} to:`)?.trim();
+
+    if (username && username.trim()) {
+      const patchedUser = { ...user, username };
+      setUsers(users.map((u) => (u.id === user.id ? patchedUser : u)));
+      axios
+        .patch(
+          `https://jsonplaceholder.typicode.com/userds/${user.id}`,
+          patchedUser
+        )
+        .catch((err) => {
+          setError(err.message);
+          setUsers(originalUsers);
+        });
+    }
+  };
+
   return (
     <>
       {isLoading && <div className="spinner-border"></div>}
@@ -93,12 +112,20 @@ function GetUsersApp() {
             className="list-group-item d-flex justify-content-between"
           >
             {user.username}
-            <button
-              className="btn btn-outline-danger"
-              onClick={() => deleteUser(user)}
-            >
-              Delete
-            </button>
+            <div>
+              <button
+                className="btn btn-outline-secondary mx-1"
+                onClick={() => updateUser(user)}
+              >
+                Update
+              </button>
+              <button
+                className="btn btn-outline-danger"
+                onClick={() => deleteUser(user)}
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
