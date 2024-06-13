@@ -1,11 +1,8 @@
-import { CanceledError } from "@/services/api-client";
+import useUsers from "@/hooks/useUsers";
 import userService, { User } from "@/services/user-service";
-import { useEffect, useState } from "react";
 
 function GetUsersApp() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
+  const { users, setUsers, error, setError, isLoading } = useUsers();
 
   /**
    * Encapsulate logic of reverting optimistically-updated user data
@@ -23,29 +20,11 @@ function GetUsersApp() {
     };
   }
 
-  useEffect(() => {
-    // Reset
-    setUsers([]);
-    setError("");
-
-    setLoading(true);
-    const { request, cancel } = userService.getAllUsers();
-
-    request
-      .then((res) => setUsers(res.data))
-      .catch((err) =>
-        err instanceof CanceledError ? null : setError(err.message)
-      )
-      .finally(() => setLoading(false));
-
-    return () => cancel();
-  }, []);
-
   const deleteUser = ({ id }: User) => {
     const { revertWithError } = setUserWithUndo(
       users.filter((user) => user.id !== id)
     );
-    userService.deleteUser(id).catch((err) => {
+    userService.delete(id).catch((err) => {
       revertWithError(err.message as string);
     });
   };
@@ -64,7 +43,7 @@ function GetUsersApp() {
       const newUser = { id: 0, username };
       const { revertWithError } = setUserWithUndo([newUser, ...users]);
       userService
-        .addUser(newUser)
+        .create(newUser)
         .then(({ data: savedUser }) => {
           setUsers([savedUser, ...users]);
         })
@@ -82,7 +61,7 @@ function GetUsersApp() {
       const { revertWithError } = setUserWithUndo(
         users.map((u) => (u.id === user.id ? patchedUser : u))
       );
-      userService.updateUser(patchedUser).catch((err) => {
+      userService.update(patchedUser).catch((err) => {
         revertWithError(err.message);
       });
     }
