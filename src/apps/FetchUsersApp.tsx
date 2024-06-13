@@ -1,25 +1,27 @@
-import apiClient, { CanceledError } from "@/services/api-client";
+import { CanceledError } from "@/services/api-client";
+import userService, { User } from "@/services/user-service";
 import { useEffect, useState } from "react";
-
-interface UserAddress {
-  street: string;
-  suite: string;
-  city: string;
-  zipcode: string;
-  geo: { lat: string; long: string };
-}
-
-interface User {
-  id: number;
-  username: string;
-  email?: string;
-  address?: UserAddress;
-}
 
 function GetUsersApp() {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
+
+  /**
+   * Encapsulate logic of reverting optimistically-updated user data
+   * with a message when an error occurs.
+   */
+  function setUserWithUndo(newUsers: User[]) {
+    const originalUsers = [...users];
+    setUsers(newUsers);
+
+    return {
+      revertWithError: (error: string) => {
+        setError(error);
+        setUsers(originalUsers);
+      },
+    };
+  }
 
   useEffect(() => {
     // Reset
@@ -27,30 +29,24 @@ function GetUsersApp() {
     setError("");
 
     setLoading(true);
-    const controller = new AbortController();
+    const { request, cancel } = userService.getAllUsers();
 
-    // simulate a delay
-    setTimeout(() => {
-      apiClient
-        .get<User[]>("users", {
-          signal: controller.signal,
-        })
-        .then((res) => setUsers(res.data))
-        .catch((err) =>
-          err instanceof CanceledError ? null : setError(err.message)
-        )
-        .finally(() => setLoading(false));
-    }, 100);
+    request
+      .then((res) => setUsers(res.data))
+      .catch((err) =>
+        err instanceof CanceledError ? null : setError(err.message)
+      )
+      .finally(() => setLoading(false));
 
-    return () => controller.abort();
+    return () => cancel();
   }, []);
 
   const deleteUser = ({ id }: User) => {
-    const originalUsers = [...users];
-    setUsers(users.filter((user) => user.id !== id));
-    apiClient.delete(`users/${id}`).catch((err) => {
-      setError(err.message);
-      setUsers(originalUsers);
+    const { revertWithError } = setUserWithUndo(
+      users.filter((user) => user.id !== id)
+    );
+    userService.deleteUser(id).catch((err) => {
+      revertWithError(err.message as string);
     });
   };
 
@@ -63,33 +59,31 @@ function GetUsersApp() {
    * of that version has been updated with the original addition.
    */
   const addUser = () => {
-    const originalUsers = [...users];
     const username = prompt(`New username:`)?.trim();
     if (username) {
       const newUser = { id: 0, username };
-      setUsers([newUser, ...users]);
-      apiClient
-        .post("users/", newUser)
+      const { revertWithError } = setUserWithUndo([newUser, ...users]);
+      userService
+        .addUser(newUser)
         .then(({ data: savedUser }) => {
           setUsers([savedUser, ...users]);
         })
         .catch((err) => {
-          setError(err.message);
-          setUsers(originalUsers);
+          revertWithError(err.message);
         });
     }
   };
 
   const updateUser = (user: User) => {
-    const originalUsers = [...users];
     const username = prompt(`Change username ${user.username} to:`)?.trim();
 
     if (username) {
       const patchedUser = { ...user, username };
-      setUsers(users.map((u) => (u.id === user.id ? patchedUser : u)));
-      apiClient.patch(`users/${user.id}`, patchedUser).catch((err) => {
-        setError(err.message);
-        setUsers(originalUsers);
+      const { revertWithError } = setUserWithUndo(
+        users.map((u) => (u.id === user.id ? patchedUser : u))
+      );
+      userService.updateUser(patchedUser).catch((err) => {
+        revertWithError(err.message);
       });
     }
   };
